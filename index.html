@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .weather-container {
+        text-align: center;
+        padding: 40px;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 400px;
+      }
+
+      h1 {
+        color: #007bff;
+      }
+
+      form {
+        margin-top: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #495057;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      #weatherInfo {
+        margin-top: 20px;
+        color: #495057;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="weather-container">
+      <h1>Weather App</h1>
+      <form id="weatherForm">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required />
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required />
+
+        <label for="plant_name">Crop-Type:</label>
+        <input type="text" id="plant_name" name="plant_name" required />
+
+        <button type="button" onclick="getWeather()">Get Weather</button>
+      </form>
+
+      <div id="weatherInfo"></div>
+    </div>
+
+    <script>
+      function getWeather() {
+        const city = document.getElementById("city").value;
+        const country = document.getElementById("country").value;
+
+        fetchWeather(city, country);
+      }
+
+      function fetchWeather(city, country) {
+        // Assuming you have a backend server that interacts with the Python script
+        // Use fetch or other AJAX methods to send a request to the backend
+
+        // Example:
+        fetch(`/api/get_weather?city=${city}&country=${country}`)
+          .then((response) => response.json())
+          .then((data) => {
+            const weatherInfoElement = document.getElementById("weatherInfo");
+            weatherInfoElement.innerHTML = `<p>Temperature: ${data.temperature}°C</p><p>Weather: ${data.description}</p>
+                    <p>Humidity: ${data.humidity}</p><p>Chance of Rain: ${data.will_it_rain}</p>`;
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </body>
+</html>
